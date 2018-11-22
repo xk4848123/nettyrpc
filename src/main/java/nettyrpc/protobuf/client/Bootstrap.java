@@ -10,21 +10,24 @@ public class Bootstrap {
 	public void startAll() throws InterruptedException {
 		DataFuther.handleMapping = new ReqHandleMapping();
 		SubReqProHandler.respHandleMapping = new RespHandleMapping();
+		SubReqProClient.subReqProClient = new SubReqProClient();
 		SubReqProClient.subReqProClient.initConnect(NettyConstant.port, NettyConstant.host);
 	}
 
 	public void startAll(String host, int port) throws InterruptedException {
 		DataFuther.handleMapping = new ReqHandleMapping();
 		SubReqProHandler.respHandleMapping = new RespHandleMapping();
+		SubReqProClient.subReqProClient = new SubReqProClient();
 		SubReqProClient.subReqProClient.initConnect(port, host);
 	}
 
 	public void startAll(String host, int port, ReqHandleMapping reqhandleMapping,RespHandleMapping respHandleMapping) throws InterruptedException {
 		DataFuther.handleMapping = reqhandleMapping;
 		SubReqProHandler.respHandleMapping = respHandleMapping;
+		SubReqProClient.subReqProClient = new SubReqProClient();
 		SubReqProClient.subReqProClient.initConnect(port, host);
 	}
-	public static void main(String[] args) throws InterruptedException {
-		new Bootstrap().startAll();
+	public void stop(){
+		SubReqProClient.subReqProClient.stopConnect();
 	}
 }

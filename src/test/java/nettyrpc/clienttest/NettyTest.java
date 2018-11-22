@@ -1,6 +1,8 @@
 
 package nettyrpc.clienttest;
  
+import java.util.concurrent.TimeUnit;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -39,23 +41,27 @@ public class NettyTest {
    //no resp
     @Test
     public void nettytest() throws Exception {
+    	Bootstrap bootstrap = new Bootstrap();
     	new Thread(()->{
 			try {
 				JpushReq jpushReq = new JpushReq();
 				jpushReq.setMessage("hello world");
 				jpushReq.setUserId(6290);
 				DataFuther.sendData(jpushReq);
+				TimeUnit.SECONDS.sleep(3);
+				bootstrap.stop();
 			} catch (Exception e) {
 				System.out.println("netty error:" + e.getMessage());
 			}
 		}).start();
-        Bootstrap bootstrap = new Bootstrap();
+       
         bootstrap.startAll();
     }
     
     //with resp
     @Test
     public void nettytest2() throws Exception {
+    	Bootstrap bootstrap = new Bootstrap();
     	new Thread(()->{
 			try {
 				PresentReq req = new PresentReq();
@@ -69,11 +75,13 @@ public class NettyTest {
 					PresentResp presentResp = (PresentResp)resp;
 					System.out.println(presentResp.getStatus());
 				}
+				TimeUnit.SECONDS.sleep(3);
+				// close after three seconds 
+				bootstrap.stop();
 			} catch (Exception e) {
 				System.out.println("netty error:" + e.getMessage());
 			}
 		}).start();
-        Bootstrap bootstrap = new Bootstrap();
         bootstrap.startAll();
     }
  

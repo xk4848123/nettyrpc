@@ -21,13 +21,15 @@ import nettyrpc.protobuf.SubscribeRespProto;
  
 public class SubReqProClient {
 	
-    static SubReqProClient subReqProClient = new SubReqProClient();
+    static SubReqProClient subReqProClient = null;
     //配置客户端NIO线程池
     private EventLoopGroup workGroup=new NioEventLoopGroup(3);
     
     Channel fixedChannel = null;
     
     private Bootstrap b = null;
+    
+    private volatile Boolean  reallyClose = false;
 
     public void initConnect(int port,String host){
     	try {
@@ -60,6 +62,11 @@ public class SubReqProClient {
         	//等待客户端链路关闭
             f.channel().closeFuture().sync();
         }finally {
+        	if (reallyClose) {
+				realse();
+				System.out.println("netty close release resource");
+				return;
+			}
             //释放NIO 线程组
 			System.out.println("channel close,wait for connet....");
 			fixedChannel.eventLoop().execute(new Runnable() {
@@ -76,4 +83,14 @@ public class SubReqProClient {
 			});
         }
     }
+     void realse(){
+    	 workGroup.shutdownGracefully();
+    	 subReqProClient = null;
+     }
+     void  stopConnect(){
+    	DataFuther.nettyStart = false;
+    	reallyClose = true;
+    	fixedChannel.close();
+    }
+    
 }
