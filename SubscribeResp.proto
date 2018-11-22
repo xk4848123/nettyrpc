@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+option java_package = "chen.di.protobuf";
+option java_outer_classname = "SubscribeRespProto";
+
+message SubscribeResp {
+   int32 subReqID = 1;
+   string header = 2;
+   int32 respCode = 3;
+   bytes msg = 4;
+}

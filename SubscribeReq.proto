@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+option java_package = "chen.di.protobuf";
+option java_outer_classname = "SubscribeReqProto";
+
+message SubscribeReq {
+   int32 subReqID = 1;
+   string header = 2;
+   bytes msg = 3;
+}
