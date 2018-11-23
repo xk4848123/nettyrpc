@@ -7,22 +7,46 @@ import nettyrpc.protobuf.client.SubReqProClient;
 
 public class Bootstrap {
 
-	public void startAll() throws InterruptedException {
+	private String host;
+	
+	private int port;
+	
+    private ReqHandleMapping reqHandleMapping;
+	
+	private RespHandleMapping respHandleMapping;
+
+	public void setHost(String host) {
+		this.host = host;
+	}
+
+	public void setPort(int port) {
+		this.port = port;
+	}
+
+	public void setReqHandleMapping(ReqHandleMapping reqHandleMapping) {
+		this.reqHandleMapping = reqHandleMapping;
+	}
+
+	public void setRespHandleMapping(RespHandleMapping respHandleMapping) {
+		this.respHandleMapping = respHandleMapping;
+	}
+
+	public void startDefault() throws InterruptedException {
 		DataFuther.handleMapping = new ReqHandleMapping();
 		SubReqProHandler.respHandleMapping = new RespHandleMapping();
 		SubReqProClient.subReqProClient = new SubReqProClient();
 		SubReqProClient.subReqProClient.initConnect(NettyConstant.port, NettyConstant.host);
 	}
 
-	public void startAll(String host, int port) throws InterruptedException {
+	public void start() throws InterruptedException {
 		DataFuther.handleMapping = new ReqHandleMapping();
 		SubReqProHandler.respHandleMapping = new RespHandleMapping();
 		SubReqProClient.subReqProClient = new SubReqProClient();
 		SubReqProClient.subReqProClient.initConnect(port, host);
 	}
 
-	public void startAll(String host, int port, ReqHandleMapping reqhandleMapping,RespHandleMapping respHandleMapping) throws InterruptedException {
-		DataFuther.handleMapping = reqhandleMapping;
+	public void startWithHandle() throws InterruptedException {
+		DataFuther.handleMapping = reqHandleMapping;
 		SubReqProHandler.respHandleMapping = respHandleMapping;
 		SubReqProClient.subReqProClient = new SubReqProClient();
 		SubReqProClient.subReqProClient.initConnect(port, host);
