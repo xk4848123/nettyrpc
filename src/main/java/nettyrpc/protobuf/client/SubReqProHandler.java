@@ -29,7 +29,7 @@ public class SubReqProHandler extends SimpleChannelInboundHandler<SubscribeRespP
 		Class<?> type = respHandleMapping.transferToClass(msg.getHeader());
 		if (type != null) {
 			Resp resp = (Resp) GsonUtil.GsonToBean(new String(msg.getMsg().toByteArray()),type);
-			DataFuther.data.put(msg.getSubReqID(), resp);
+			DataFuther.data.put(msg.getSubReqID(), new DataFuther.RespPack(resp,System.currentTimeMillis()));
 		}
 	}
 	@Override
