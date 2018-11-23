@@ -68,59 +68,16 @@ public class NettyTest {
 				req.setType(1);
 				req.setUserId(6290);
 				DataFuther.sendData(req);
-//				Resp resp = DataFuther.getData();
-//				if (resp instanceof NullResp || resp == null) {
-//					System.out.println("no data return!");
-//				}else{
-//					PresentResp presentResp = (PresentResp)resp;
-//					System.out.println(presentResp.getStatus());
-//				}
-//				TimeUnit.SECONDS.sleep(3);
-				// close after three seconds 
-//				bootstrap.stop();
-			} catch (Exception e) {
-				System.out.println("netty error:" + e.getMessage());
-			}
-		}).start();
-    	
-    	new Thread(()->{
-			try {
-				PresentReq req = new PresentReq();
-				req.setType(1);
-				req.setUserId(6290);
-				DataFuther.sendData(req);
-//				Resp resp = DataFuther.getData();
-//				if (resp instanceof NullResp || resp == null) {
-//					System.out.println("no data return!");
-//				}else{
-//					PresentResp presentResp = (PresentResp)resp;
-//					System.out.println(presentResp.getStatus());
-//				}
-				
-				// close after three seconds 
-//				bootstrap.stop();
-			} catch (Exception e) {
-				System.out.println("netty error:" + e.getMessage());
-			}
-		}).start();
-    	
-    	new Thread(()->{
-			try {
-				PresentReq req = new PresentReq();
-				req.setType(1);
-				req.setUserId(6290);
+				Resp resp = DataFuther.getData();
+				if (resp instanceof NullResp || resp == null) {
+					System.out.println("no data return!");
+				}else{
+					PresentResp presentResp = (PresentResp)resp;
+					System.out.println(presentResp.getStatus());
+				}
 				TimeUnit.SECONDS.sleep(3);
-				DataFuther.sendData(req);
-//				Resp resp = DataFuther.getData();
-//				if (resp instanceof NullResp || resp == null) {
-//					System.out.println("no data return!");
-//				}else{
-//					PresentResp presentResp = (PresentResp)resp;
-//					System.out.println(presentResp.getStatus());
-//				}
-//				TimeUnit.SECONDS.sleep(3);
 				// close after three seconds 
-//				bootstrap.stop();
+				bootstrap.stop();
 			} catch (Exception e) {
 				System.out.println("netty error:" + e.getMessage());
 			}
